@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,57 +8,56 @@ public class PlayerController : MonoBehaviour
 
     [Header("Audio")]
     public AudioClip attackClip;
-    public AudioClip HitClip;
-    private AudioSource audiosource;
+    public AudioClip hitClip;
+    private AudioSource audioSource;
 
-
-
-    // Start is called before the first frame update
     void Start()
     {
         playerAnim = player.GetComponent<Animator>();
-        audiosource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         MouseOnClick();
     }
 
-   
-
-    private void EnemyAttack(RaycastHit2D hit)
+    public void EnemyAttack(Enemy enemy)
     {
-        Enemy enemy = hit.collider.GetComponent<Enemy>();
-        AudioSource enemyAudio = hit.collider.GetComponent<AudioSource>();
         if (enemy != null)
         {
+            Debug.Log("Attacking enemy: " + enemy.name);
             enemy.EnenmyOnClick();
-            enemyAudio.clip = HitClip;
-            enemyAudio.Play();
-
+            AudioSource enemyAudio = enemy.GetComponent<AudioSource>();
+            if (enemyAudio != null)
+            {
+                enemyAudio.clip = hitClip;
+                enemyAudio.Play();
+            }
 
             playerAnim.SetTrigger("Attack");
-            audiosource.clip = attackClip;
-            audiosource.Play();
-
+            audioSource.clip = attackClip;
+            audioSource.Play();
+        }
+        else
+        {
+            Debug.Log("No enemy found to attack.");
         }
     }
-        private void MouseOnClick()
+
+    private void MouseOnClick()
+    {
+        if (Input.GetMouseButtonDown(0))
         {
-            if (Input.GetMouseButtonDown(0))
+            Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
+
+            if (hit.collider != null && hit.collider.tag == "Enemy")
             {
-                Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-                RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
-
-                if (hit.collider != null && hit.collider.tag == "Enemy")
-                {
-                    EnemyAttack(hit);
-                }
+                Enemy enemy = hit.collider.GetComponent<Enemy>();
+                EnemyAttack(enemy);
             }
         }
-
     }
+}
 
