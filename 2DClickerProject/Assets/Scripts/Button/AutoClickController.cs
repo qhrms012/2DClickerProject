@@ -13,18 +13,15 @@ public class AutoClickController : MonoBehaviour
     private void Start()
     {
         // 자동 클릭 시작
-        Debug.Log("Starting AutoClick Coroutine.");
         StartCoroutine(AutoClick());
     }
 
     private IEnumerator AutoClick()
     {
-        Debug.Log("AutoClick Coroutine started.");
         while (true)
         {
             if (isAutoClicking)
             {
-                Debug.Log("AutoClick triggered.");
                 // 주변의 적을 찾아 공격
                 AttackNearbyEnemies();
             }
@@ -36,13 +33,11 @@ public class AutoClickController : MonoBehaviour
     private void AttackNearbyEnemies()
     {
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(playerController.transform.position, attackRange);
-        Debug.Log("Checking for enemies in range: " + hitColliders.Length + " found.");
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider.CompareTag("Enemy"))
             {
                 Enemy enemy = hitCollider.GetComponent<Enemy>();
-                Debug.Log("Enemy found: " + enemy.name);
                 playerController.EnemyAttack(enemy);
                 break; // 한 번 공격 후 종료
             }

@@ -18,4 +18,10 @@ public class Enemy : MonoBehaviour
     {
         anim.SetTrigger("Hit");
     }
+
+    public void EnemyDie()
+    {
+        Destroy(gameObject);
+        
+    }
 }
