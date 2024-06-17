@@ -15,16 +15,6 @@ public class EnemySp : MonoBehaviour
     {
         settings = GameManager.Instance.settings;
         controller = FindObjectOfType<UIcontroller>();
-
-        if (settings == null)
-        {
-            Debug.LogError("Settings 객체를 찾을 수 없습니다.");
-        }
-
-        if (controller == null)
-        {
-            Debug.LogError("UIcontroller 객체를 찾을 수 없습니다.");
-        }
     }
 
     void Update()
