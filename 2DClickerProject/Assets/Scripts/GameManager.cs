@@ -2,45 +2,38 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public Settings settings; // 게임 설정 객체
-    public SaveLoadManager saveLoadManager;
+    public static GameManager Instance;
 
-    private void Start()
-    {
-        saveLoadManager = GetComponent<SaveLoadManager>();
-        LoadGameData();
-    }
+    public Settings settings;
+    public EnemySp enemySp;
 
-    public void SaveGameData()
+    void Awake()
     {
-        GameData data = new GameData(settings.stage, settings.enemyCount, settings.gold, settings.attackDMG, settings.enemyHP);
-        saveLoadManager.Save(data);
-    }
-
-    public void LoadGameData()
-    {
-        GameData loadedData = saveLoadManager.Load();
-        if (loadedData != null)
+        if (Instance == null)
         {
-            // 로드된 데이터를 게임에 반영
-            settings.stage = loadedData.stage;
-            settings.enemyCount = loadedData.enemyCount;
-            settings.gold = loadedData.gold;
-            settings.attackDMG = loadedData.attackDMG;
-            settings.enemyHP = loadedData.enemyHP;
-
-            // 기타 UI 등의 업데이트 작업
-            UpdateUI();
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            // 새로운 게임 시작 시 초기화 또는 기타 처리
-            Debug.Log("새로운 게임 시작.");
+            Destroy(gameObject);
         }
     }
 
-    private void UpdateUI()
+    void Start()
     {
-        // UI 업데이트 로직 추가
+
+        settings = FindObjectOfType<Settings>();
+        enemySp = FindObjectOfType<EnemySp>();
+        
+        if (settings == null)
+        {
+            Debug.LogError("Settings 객체를 찾을 수 없습니다.");
+        }
+
+        if (enemySp == null)
+        {
+            Debug.LogError("EnemySp 객체를 찾을 수 없습니다.");
+        }
     }
 }
