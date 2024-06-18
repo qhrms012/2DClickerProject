@@ -1,4 +1,7 @@
 # 2DClickerProject
+
+## 사망 파티클
+![2024-06-1811-35-58-ezgif com-video-to-gif-converter](https://github.com/qhrms012/2DClickerProject/assets/122000753/610dfb8b-5b14-431a-ab34-6539789bc532)
 ## 배경 스크롤
 ![2024-06-1323-16-54-ezgif com-video-to-gif-converter](https://github.com/qhrms012/2DClickerProject/assets/122000753/4277e054-d468-4bff-9664-14526097868f)
 ## 클릭 애니메이션
