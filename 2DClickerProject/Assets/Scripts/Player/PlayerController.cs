@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
 
     private UIcontroller uicontroller;
     private Settings settings;
-
+    public ParticleSystem deathParticlePrefab;
     void Start()
     {
         playerAnim = player.GetComponent<Animator>();
@@ -47,6 +47,8 @@ public class PlayerController : MonoBehaviour
             {
                 enemy.EnemyDie();
                 settings.GetGold();
+                deathParticlePrefab.Play();
+                
                 if (uicontroller != null)
                 {
                     uicontroller.textGold.text = settings.SGold();
